@@ -19,7 +19,7 @@
       {
         "label": "Check home-dot-ssh",
         "type": "process",
-        "command": "/usr/bin/bash",
+        "command": "/bin/sh",
         "args": ["-c", "[ ! -d ~/.ssh ] && mkdir ~/.ssh || exit 0"],
         "presentation": {
           "echo": false,
