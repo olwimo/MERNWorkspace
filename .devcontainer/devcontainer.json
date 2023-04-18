@@ -1,0 +1,123 @@
+{
+  "name": "MERN Workspace (olwimo)",
+  "dockerComposeFile": "docker-compose.yml",
+  "overrideCommand": false,
+  "shutdownAction": "stopAll",
+  "service": "vscode",
+  "runServices": ["mongo", "vscode", "nginx"],
+
+  // "mounts": [
+  //   // "source=${localEnv:HOME}/.gitconfig,target=/home/jovyan/.gitconfig,type=bind,consistency=cached",
+  //   "source=${localEnv:HOME}/.ssh,target=/home/jovyan/.ssh,type=bind,consistency=cached",
+  //   "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind,consistency=cached"
+  // ],
+  // "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": ["nginx:80"],
+
+  // // Forward Jupyter port locally, mark required
+  // "forwardPorts": [8888], // 5000, 9000
+  "portsAttributes": {
+    "nginx:80": {
+      "label": "WebApp",
+      "requireLocalPort": true,
+      "elevateIfNeeded": true,
+      "onAutoForward": "ignore"
+    }
+    // "8888": {
+    //   "label": "Jupyter",
+    //   "requireLocalPort": true,
+    //   "onAutoForward": "ignore"
+    // }
+  },
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "remoteEnv": {
+    "NODE_ENV": "development",
+		"CHOKIDAR_USEPOLLING": "true",
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+
+  // "runArgs": [
+  //   "--gpus",
+  //   "all"
+  //   // "--gpus=all"
+  //   // "--runtime=nvidia"
+  // ],
+  // "containerEnv": {
+  // 	"PATH": "${containerEnv:PATH}:/usr/local/cuda/bin",
+  // 	"LD_LIBRARY_PATH": "$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64",
+  // 	"XLA_FLAGS": "--xla_gpu_cuda_data_dir=/usr/local/cuda"
+  // },
+  // // "privileged": true,
+  // "hostRequirements": {
+  // 	"gpu": "optional"
+  // },
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+      "version": "latest",
+      "moby": true,
+      "dockerDashComposeVersion": "v2"
+    }
+  },
+
+  // Configure tool-specific properties.
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Set *default* container specific settings.json values on container create.
+      "settings": {
+        // "python.defaultInterpreterPath": "/opt/conda/bin/python",
+        "files.eol": "\n",
+        "input-assist.languages": ["plaintext"]
+        // "python.terminal.activateEnvironment": false
+      },
+
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+				"mongodb.mongodb-vscode",
+				"ms-azuretools.vscode-docker",
+				"ms-kubernetes-tools.vscode-kubernetes-tools",
+				"github.vscode-pull-request-github",
+				"eamodio.gitlens",
+				"redhat.vscode-yaml",
+				"freebroccolo.input-assist",
+				"nwolverson.ide-purescript",
+				"dhall.dhall-lang",
+				"dhall.vscode-dhall-lsp-server",
+				"amazonwebservices.aws-toolkit-vscode",
+				"mikestead.dotenv",
+				"msjsdiag.vscode-react-native",
+				"syler.sass-indented",
+        "mgmcdermott.vscode-language-babel",
+        // "ms-python.isort",
+        // "julialang.language-julia",
+        // "ms-toolsai.jupyter",
+        // "ms-toolsai.vscode-jupyter-cell-tags",
+        // "ms-toolsai.jupyter-keymap",
+        // "ms-toolsai.jupyter-renderers",
+        // "ms-toolsai.vscode-jupyter-slideshow",
+        // "ms-python.vscode-pylance",
+        "esbenp.prettier-vscode",
+        "msrvida.vscode-sanddance",
+        // "ms-python.python",
+        // "reditorsupport.r",
+        // "nvidia.nsight-vscode-edition",
+        // "james-yu.latex-workshop",
+        "ms-vscode.hexeditor"
+      ]
+    }
+  },
+
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "pip3 install --user -r requirements.txt",
+  // "postStartCommand": "nohup bash -c 'jupyter notebook --ip=0.0.0.0 --port=8888 --allow-root &'",
+  // "postCreateCommand": "pip3 install --user jupyter tensorflow",
+
+  // Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node",
+  "containerUser": "node"
+}

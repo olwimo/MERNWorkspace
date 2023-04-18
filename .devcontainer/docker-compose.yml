@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
+    volumes:
+      - mongodb:/data/db
+  vscode:
+    image: mcr.microsoft.com/devcontainers/typescript-node:0-18-bullseye
+    container_name: vscode
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ..
+        target: /workspace
+      # - type: bind
+      #   source: ${HOME}/.gitconfig
+      #   target: /home/node/.gitconfig
+      - type: bind
+        source: ${HOME}/.ssh
+        target: /home/node/.ssh
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker-host.sock
+    user: node
+    init: true
+    env_file: vscode.env
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - mongo
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    # privileged: true
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - type: bind
+        source: nginx.conf
+        target: /etc/nginx/nginx.conf
+        read_only: true
+      - nginxlog:/var/log/nginx
+    depends_on:
+      - vscode
+
+volumes:
+  mongodb:
+  nginxlog:
