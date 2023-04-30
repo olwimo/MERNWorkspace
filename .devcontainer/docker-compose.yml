@@ -8,7 +8,7 @@ services:
     volumes:
       - mongodb:/data/db
   vscode:
-    image: mcr.microsoft.com/devcontainers/typescript-node:0-18-bullseye
+    build: .
     container_name: vscode
     restart: unless-stopped
     volumes:
