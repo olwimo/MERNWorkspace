@@ -11,6 +11,10 @@
     {
       "path": "MERNServer",
       "name": "Backend"
+    },
+    {
+      "path": "MERNMobileApp",
+      "name": "Mobile"
     }
   ],
   "tasks": {
